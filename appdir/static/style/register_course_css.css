@@ -1,0 +1,15 @@
+.form-course-register{
+  max-width: 450px;
+  padding: 25px;
+  margin: 150px auto;
+  background-color: rgba(245,245,245,0.7);
+  border-radius: 30px;
+}
+.register-course{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-position: center center;
+    background-size: cover;
+    background-image: url("../Image/bg-login.jpg");
+}

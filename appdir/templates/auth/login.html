@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="../../static/style/login_css.css" />
+    <script type="text/javascript">
+        window.onload=function(){
+            checkLogin();
+        }
+        function checkLogin() {
+let validate = document.getElementById('id').value;
+let bg = document.getElementById('id-bg');
+let message = document.getElementById('error-message');
+let id_format = /^[ST]\d{8}$/;
+let check = id_format.test(validate);
+if (!check) {
+    bg.style.backgroundColor = "red";
+    message.innerText = "Enter correct id(S/T ********)"
+}
+if (validate.length == 0){
+    bg.style.backgroundColor = "red";
+    message.innerText = "Can't be empty";
+}
+if (check){
+    bg.style.backgroundColor = "transparent";
+    message.innerText = "";
+}
+
+}
+
+    </script>
+</head>
+<style>
+ul{/*设置导航栏的框框*/
+   margin: 0px auto;/*框框整体的位置，30px是指离网页的顶部和下部的距离，auto控制的是左右距离为自动调节*/
+   width: 1335px;/*框框的宽度*/
+   height: 50px;/*框框的长度*/
+   padding: 0px;/*将框框的padding设置为零，不然会导致框框里的内容与框边缘有间隔*/
+}
+li{
+   list-style-type: none;/* 去掉li前的点 */
+   float: left;/*将li设置成做浮动，变为联动*/
+}
+.register{
+          display: inline;
+          background-color: transparent;
+          color: dodgerblue;
+}
+.title-bar{
+   display: block;/*将a变成块状*/
+   width: 300px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+}
+#empty{
+   display: block;/*将a变成块状*/
+   width: 735px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+      }
+.title-bar:hover{
+   background-color: #2f6f4f;
+}
+</style>
+<body>
+<div class="login-page">
+    <div class="login-page-bg">
+        <div>
+            <ul>
+                <li><a class="title-bar" href=" ">Education Platform of BDIC</a ></li>
+                <li><a id="empty" href=""></a ></li>
+                <li><a class="title-bar" href="/index/home">Login as Visitor</a ></li>
+            </ul>
+        </div>
+    <div class="container">
+        <form class="form-signin"  method="POST" >
+            {{ form.hidden_tag() }}
+            <h2>Login</h2>
+            <table>
+        <tbody>
+        <tr>
+            <td>
+                {{ form.id.label }}
+            </td>
+            <td id="id-bg">
+                {{ form.id(onchange = "checkLogin()")}}
+            </td>
+            <td id="error-message"></td>
+
+        </tr>
+        <tr>
+            <td>
+                {{ form.password.label }}
+            </td>
+            <td>
+                {{ form.password }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                {{ form.Loginsubmit }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+        <div>
+            <h4><small>
+                Don't have an account?
+                <a class="register" href="/auth/register">Click here to register</a>
+            </small></h4>
+        </div>
+        </form>
+    </div>
+    </div>
+
+</div>
+
+</body>
+</html>

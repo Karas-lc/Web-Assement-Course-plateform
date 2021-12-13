@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Course</title>
+    <link rel="stylesheet" href="../../static/style/new_course_css.css" />
+</head>
+
+<style>
+.home-navbar{/*设置导航栏的框框*/
+   margin: 0px auto;/*框框整体的位置，30px是指离网页的顶部和下部的距离，auto控制的是左右距离为自动调节*/
+   width: 1335px;/*框框的宽度*/
+   height: 50px;/*框框的长度*/
+   padding: 0px;/*将框框的padding设置为零，不然会导致框框里的内容与框边缘有间隔*/
+}
+.home-bar-button{
+   list-style-type: none;/* 去掉li前的点 */
+   float: left;/*将li设置成做浮动，变为联动*/
+}
+.title-bar{
+   display: block;/*将a变成块状*/
+   width: 300px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+}
+.small-bar{
+   display: block;/*将a变成块状*/
+   width: 200px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+}
+.empty{
+   display: block;/*将a变成块状*/
+   width: 200px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+}
+.empty-bar{
+   display: block;/*将a变成块状*/
+   width: 435px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+}
+.title-bar:hover{
+   background-color: #2f6f4f;
+}
+.small-bar:hover{
+   background-color: #2f6f4f;
+}
+</style>
+<script type="text/javascript">
+    window.onload = function () {
+        checkKey();
+        checkCourseName();
+        checkIntroduction();
+    }
+    function checkKey() {
+    let validate = document.getElementById('key').value;
+    let bg = document.getElementById('key-bg');
+    let message = document.getElementById('key-message');
+
+    if (validate.length == 0){
+        bg.style.backgroundColor = "red";
+        message.innerText = "Can't be empty";
+    }else{
+        bg.style.backgroundColor = "transparent";
+        message.innerText = "";
+    }
+    }
+    function checkCourseName() {
+    let validate = document.getElementById('name').value;
+    let bg = document.getElementById('course-name-bg');
+    let message = document.getElementById('course-name-message');
+
+    if (validate.length == 0){
+        bg.style.backgroundColor = "red";
+        message.innerText = "Can't be empty";
+    }else{
+        bg.style.backgroundColor = "transparent";
+        message.innerText = "";
+    }
+    }
+    function checkIntroduction() {
+    let validate = document.getElementById('Introduction').value;
+    let bg = document.getElementById('introduction-bg');
+    let message = document.getElementById('introduction-message');
+
+    if (validate.length == 0){
+        bg.style.backgroundColor = "red";
+        message.innerText = "Can't be empty";
+    }else{
+        bg.style.backgroundColor = "transparent";
+        message.innerText = "";
+    }
+    }
+</script>
+<body>
+<div class="new-course-page">
+    <div>
+        <ul class="home-navbar">
+        <li class="home-bar-button"><a class="title-bar" href=" ">Education Platform of BDIC</a ></li>
+
+        <li class="home-bar-button"><a class="small-bar" href="/index/course">All Course</a ></li>
+
+        {% if session['userID'] != null %}
+        {%  if session['userID'][0] == "T" %}
+            <li class="home-bar-button"><a class="small-bar" href="/courses/new_course">New Course</a ></li>
+        {% else %}
+            <li class="home-bar-button"><a class="empty" href=""></a ></li>
+        {% endif %}
+        {% else %}
+            <li class="home-bar-button"><a class="empty" href=""></a ></li>
+        {% endif %}
+
+        <li class="home-bar-button"><a class="empty-bar" href=""></a ></li>
+
+        {% if session['userID'] != null %}
+        <li class="home-bar-button"><a class="small-bar" href="/auth/main">Log out</a ></li>
+        {% else %}
+        <li class="home-bar-button"><a class="small-bar" href="/index/home">Register</a ></li>
+        {% endif %}
+    </ul>
+    </div>
+</div>
+<div class="new-course-bg">
+    <div class="container">
+        <form class="form-new-course" method="POST">
+            {{ form.hidden_tag() }}
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        {{ form.key.label }}
+                    </td>
+                    <td id="key-bg">
+                        {{ form.key(onchange = "checkKey()")}}
+                    </td>
+                    <td id="key-message"></td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form.name.label }}
+                    </td>
+                    <td id="course-name-bg">
+                        {{ form.name(onchange = "checkCourseName()") }}
+                    </td>
+                    <td id="course-name-message"></td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form.semester_year.label }}
+                    </td>
+                    <td>
+                        {{ form.semester_year }}
+                    </td>
+                    {% for error in form.key.errors %}
+                        <td style="color: red;">[{{ error }}]</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>
+                        {{ form.semester_term.label }}
+                    </td>
+                    <td>
+                        {{ form.semester_term }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form.Introduction.label }}
+                    </td>
+                    <td id="introduction-bg">
+                        {{ form.Introduction(onchange = "checkIntroduction()") }}
+                    </td>
+                    <td id="introduction-message"></td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form.NewCoursesubmit }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="../../static/style/home_css.css">
+</head>
+<style>
+.home-navbar{/*设置导航栏的框框*/
+   margin: 0px auto;/*框框整体的位置，30px是指离网页的顶部和下部的距离，auto控制的是左右距离为自动调节*/
+   width: 1335px;/*框框的宽度*/
+   height: 50px;/*框框的长度*/
+   padding: 0px;/*将框框的padding设置为零，不然会导致框框里的内容与框边缘有间隔*/
+}
+.home-bar-button{
+   list-style-type: none;/* 去掉li前的点 */
+   float: left;/*将li设置成做浮动，变为联动*/
+}
+.title-bar{
+   display: block;/*将a变成块状*/
+   width: 300px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+}
+.small-bar{
+   display: block;/*将a变成块状*/
+   width: 200px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+}
+.empty{
+   display: block;/*将a变成块状*/
+   width: 200px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+}
+.empty-bar{
+   display: block;/*将a变成块状*/
+   width: 435px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+}
+.title-bar:hover{
+   background-color: #2f6f4f;
+}
+.small-bar:hover{
+   background-color: #2f6f4f;
+}
+</style>
+<body>
+<div class="home-page">
+    <div>
+        <ul class="home-navbar">
+        <li class="home-bar-button"><a class="title-bar" href=" ">Education Platform of BDIC</a ></li>
+
+        <li class="home-bar-button"><a class="small-bar" href="/index/course">All Course</a ></li>
+
+        {% if session['userID'] != null %}
+        {%  if session['userID'][0] == "T" %}
+            <li class="home-bar-button"><a class="small-bar" href="/courses/new_course">New Course</a ></li>
+        {% else %}
+            <li class="home-bar-button"><a class="empty" href=""></a ></li>
+        {% endif %}
+        {% else %}
+            <li class="home-bar-button"><a class="empty" href=""></a ></li>
+        {% endif %}
+
+        <li class="home-bar-button"><a class="empty-bar" href=""></a ></li>
+
+        {% if session['userID'] != null %}
+        <li class="home-bar-button"><a class="small-bar" href="/">Log out</a ></li>
+        {% else %}
+        <li class="home-bar-button"><a class="small-bar" href="/index/home">Register</a ></li>
+        {% endif %}
+        </ul>
+    </div>
+    <div class="home-page-bg" style="background-color: #F0FFFF">
+        <br/>
+        <h4 class="my-course-title" style="padding-top: 1rem; padding-bottom: 1rem; color: rebeccapurple">My Course</h4>
+    <div class="container" id="my-course-home" style="background-color: rgba(230, 230, 250, 0.7); min-height: 300px">
+
+            <div class="row">
+            {% if session['userID'] != null %}
+                {% if data[0] == null %}
+                    <h4 class="m-auto"> No Courses </h4>
+                {% endif %}
+                {% if data[0] != null %}
+                    <div class="box" id="my-course-card">
+                    <span></span>
+                        <div class="content">
+                            <h2>{{data[0].name}}</h2>
+                            <p>Professor:{{data[0].TeacherID}}</p>
+                            <p><small class="text-muted">semester:{{data[0].semester}}</small></p>
+                            <a href="/details/{{data[0].id}}" class="btn btn-primary">Details</a >
+                        </div>
+                    </div>
+                {% endif %}
+                {% if data[1] != null %}
+                    <div class="box" id="my-course-card" >
+                    <span></span>
+                        <div class="content">
+                            <h2>{{data[1].name}}</h2>
+                            <p>Professor:{{data[1].TeacherID}}</p>
+                            <p><small class="text-muted">semester:{{data[1].semester}}</small></p >
+                            <a href="/details/{{ data[1].id}}">Details</a >
+                        </div>
+                    </div>
+                {% endif %}
+                {% if data[2] != null %}
+                    <div class="box" id="my-course-card">
+                    <span></span>
+                        <div class="content">
+                            <h2>{{data[2].name}}</h2>
+                            <p>Professor:{{data[2].TeacherID}}</p>
+                            <p><small class="text-muted">semester:{{data[2].semester}}</small></p >
+                            <a href="/details/{{ data[2].id}}" class="btn btn-primary">Details</a >
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+            </div>
+        {% if session['userID'] == null %}
+            <h4 style="text-align:center"> Register to have your courses </h4>
+        {% endif %}
+    </div>
+        <div>
+        {% if session['userID'] != null %}
+            {% if data[3] != null %}
+            <a href="/courses/my_courses" class="float-right"> more details </a><br/>
+            {% endif %}
+        {% endif %}
+        </div>
+    </div>
+    <div class="courses-bg" style="background-color: #F0FFFF">
+        <div>
+            <label>
+                <select id="semester" name="years" onchange="showSemester(this.value)" style="font-family:Verdana, Arial, Helvetica, sans-serif;">
+                    <option value="2021-2022 | 1">2021-2022 | 1</option>
+                    <option value="2021-2022 | 2">2021-2022 | 2</option>
+                    <option value="2022-2023 | 1">2022-2023 | 1</option>
+                    <option value="2022-2023 | 2">2022-2023 | 2</option>
+                    <option value="2023-2024 | 1">2023-2024 | 1</option>
+                    <option value="2023-2024 | 2">2023-2024 | 2</option>
+                </select>
+            </label>
+        </div>
+        <div>
+            <input id="send1" type="button" value="Send">
+        </div>
+        <div id = "con" class="container" style="background-color: rgba(230, 230, 250, 0.7)"></div>
+    </div>
+</div>
+
+
+<script src="../../static/js/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+         $("#send1").click(function () {
+             var message = $("#semester").val()
+             $.ajax({
+                 url:"http://127.0.0.1:5000/send_message_home",
+                 type:"GET",
+                 data:{
+                     message:message
+                 }
+             })
+             $('#con').html('')
+         })
+    </script>
+<script type="text/javascript">
+    $("#send1").click(function () {
+
+        $.getJSON("http://127.0.0.1:5000/change_to_json_home",function (data) {
+            for (var i in data){
+                var id = data[i][0]
+                var name = data[i][1]
+                var sm = data[1][2]
+                $('#con').append(
+                    "<div class='box'><span><div class='content'><h2 class='card-title'>"
+                    +name+
+                    "</h2><p class='card-text'><small class='text-muted'>"
+                    +sm
+                    +"</small></p><a href='/details/"
+                    +id
+                    +"'>Details</a></div></span></div>")}
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+
+    <link rel="stylesheet" href="../../static/style/login_css.css" />
+</head>
+<style>
+.register-navbar{/*设置导航栏的框框*/
+   margin: 0px auto;/*框框整体的位置，30px是指离网页的顶部和下部的距离，auto控制的是左右距离为自动调节*/
+   width: 1335px;/*框框的宽度*/
+   height: 50px;/*框框的长度*/
+   padding: 0px;/*将框框的padding设置为零，不然会导致框框里的内容与框边缘有间隔*/
+}
+.register-bar-button{
+   list-style-type: none;/* 去掉li前的点 */
+   float: left;/*将li设置成做浮动，变为联动*/
+}
+.title-bar{
+   display: block;/*将a变成块状*/
+   width: 300px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+}
+#empty{
+   display: block;/*将a变成块状*/
+   width: 735px;/*设置块的宽度*/
+   height: 50px;/*设置块的长度*/
+   line-height: 50px;/*设置字体在块中的高度*/
+   background-color: #2f4f4f;
+   margin: 0px 0px;/*块里的高宽通过margin设置*/
+   color: #fff;
+   text-align: center;/*字体居中*/
+   text-decoration: none;/*去掉下划线*/
+   font-size: 15px;
+      }
+.title-bar:hover{
+   background-color: #2f6f4f;
+}
+</style>
+    <script type="text/javascript">
+    window.onload=function(){
+        checkID();
+        checkName();
+        checkPsw();
+        checkRepsw();
+        checkEmail();
+    }
+    function checkID() {
+    let validate = document.getElementById('id').value;
+    let bg = document.getElementById('id-bg');
+    let message = document.getElementById('id-message');
+    let id_format = /^[ST]\d{8}$/;
+    let check = id_format.test(validate);
+    if (!check) {
+        bg.style.backgroundColor = "red";
+        message.innerText = "Enter correct id(S/T ********)"
+    }
+    if (validate.length == 0){
+        bg.style.backgroundColor = "red";
+        message.innerText = "Can't be empty";
+    }
+    if (check){
+        bg.style.backgroundColor = "transparent";
+        message.innerText = "";
+    }
+
+    }
+    function checkName() {
+    let validate = document.getElementById('name').value;
+    let bg = document.getElementById('name-bg');
+    let message = document.getElementById('name-message');
+    let name_format = /(^[a-zA-Z]{1}[a-zA-Z\s]{0,20}[a-zA-Z]{1}$)/;
+    let check = name_format.test(validate);
+    if (!check) {
+        bg.style.backgroundColor = "red";
+        message.innerText = "Enter correct English Name"
+    }
+    if (validate.length == 0){
+        bg.style.backgroundColor = "red";
+        message.innerText = "Can't be empty";
+    }
+    if (check){
+        bg.style.backgroundColor = "transparent";
+        message.innerText = "";
+    }
+    }
+    function checkPsw() {
+    let validate = document.getElementById('password').value;
+    let bg = document.getElementById('psw-bg');
+    let message = document.getElementById('psw-message');
+
+    if (validate.length == 0){
+        bg.style.backgroundColor = "red";
+        message.innerText = "Can't be empty";
+    }else{
+        bg.style.backgroundColor = "transparent";
+        message.innerText = "";
+    }
+    }
+    function checkRepsw() {
+    let validate = document.getElementById('repassword').value;
+    let origin = document.getElementById('password').value;
+    let bg = document.getElementById('repsw-bg');
+    let message = document.getElementById('repsw-message');
+    if (validate!=origin) {
+        bg.style.backgroundColor = "red";
+        message.innerText = "Enter Same Password"
+    }
+    if (validate.length == 0){
+        bg.style.backgroundColor = "red";
+        message.innerText = "Can't be empty";
+    }
+    if (validate==origin){
+        bg.style.backgroundColor = "transparent";
+        message.innerText = "";
+    }
+    }
+    function checkEmail() {
+    let validate = document.getElementById('email').value;
+    let bg = document.getElementById('email-bg');
+    let message = document.getElementById('email-message');
+    let email_format = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    let check = email_format.test(validate);
+    if (!check) {
+        bg.style.backgroundColor = "red";
+        message.innerText = "Enter available email address"
+    }
+    if (validate.length == 0){
+        bg.style.backgroundColor = "red";
+        message.innerText = "Can't be empty";
+    }
+    if (check){
+        bg.style.backgroundColor = "transparent";
+        message.innerText = "";
+    }
+    }
+    </script>
+<body>
+<div class="login-page">
+    <div class="login-page-bg">
+         <div>
+             <ul class="register-navbar">
+                <li class="register-bar-button"><a class="title-bar" href=" ">Education Platform of BDIC</a ></li>
+                <li class="register-bar-button"><a id="empty" href=""></a ></li>
+                <li class="register-bar-button"><a class="title-bar" href="/index/home">Login as Visitor</a ></li>
+            </ul>
+        </div>
+    {% for message in get_flashed_messages() %}
+         <div class="alert">{{ message }}</div>
+    {% endfor %}
+        <div class="container">
+            <form class="form-register" method="POST" >
+                {{ form.csrf_token }}
+                <h2>Register to create your account</h2>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>
+                            {{ form.id.label }}
+                        </td>
+                        <td id="id-bg">
+                            {{ form.id(onchange = "checkID()")}}
+                        </td>
+                        <td id="id-message"></td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.name.label }}
+                        </td>
+                        <td id="name-bg">
+                            {{ form.name(onchange = "checkName()") }}
+                        </td>
+                        <td id="name-message"></td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.password.label }}
+                        </td>
+                        <td id="psw-bg">
+                            {{ form.password(onchange = "checkPsw()") }}
+                        </td>
+                        <td id="psw-message"></td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.repassword.label }}
+                        </td>
+                        <td id="repsw-bg">
+                            {{ form.repassword(onchange = "checkRepsw()") }}
+                        </td>
+                        <td id="repsw-message"></td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.email.label }}
+                        </td>
+                        <td id="email-bg">
+                            {{ form.email(onchange = "checkEmail()") }}
+                        </td>
+                        <td id="email-message"></td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.submit }}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
